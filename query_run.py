@@ -369,8 +369,7 @@ for scan in scans:
     seg_flair_file = ordner + scan + "/Flair.nii.gz"
 
     # Registrations
-    warp_sim_to_pat_space(t1c_file)
-
+    
     antsSyN_call = "antsRegistrationSyN.sh -d 3 -n 32 -t s -f " + atlas_file + " -m " + t1c_file.replace(
         ".nii.gz", "space.nii.gz") + " -x " + atlas_mask_file + " -o " + t1c_file.replace(".nii.gz", "Reg.nii.gz")
     subprocess.run(shlex.split(antsSyN_call),
@@ -422,6 +421,7 @@ for scan in scans:
     print("[ scan " + str(index) + " out of " + str(total) + " ] " + scan + ": ")
     print(best_score)
 
+    # remove unneccessary files
     os.remove(ordner + scan + "/t1Reg.nii.gz1Warp.nii.gz")
     os.remove(ordner + scan + "/t1-space.nii.gz")
     os.remove(ordner + scan + "/Flair-space.nii.gz")
